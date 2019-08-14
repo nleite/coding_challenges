@@ -13,7 +13,13 @@ def change_count(money, coins):
 def main():
 
     # Test cases
+    assert change_count(4, [-1, 2, 5]) == 1 # [2,2]
+
     assert change_count(5, [1,2]) == 3 # [1,1,1,1,1] [1,1,1,2] [1,2,2]
+
+    assert change_count(10, [1,2,5]) == 10 # [1,1,1,1,1,1,1,1,1,1] [1,1,1,1,1,1,1,1,2] [1,1,1,1,1,1,2,2] [1,1,1,1,2,2,2] [1,1,2,2,2,2] [1,1,1,1,1,5] [1,1,1,2,5] [1,2,2,5] [2,2,2,2,2] [5,5]
+
+    assert change_count(7, [3,5]) == 0
 
 if __name__ == "__main__":
     main()
