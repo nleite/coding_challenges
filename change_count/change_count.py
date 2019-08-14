@@ -53,8 +53,9 @@ def change_count(money, coins):
     for c in coins:
         # in each position
         for i, _ in enumerate(coins):
-            # traverse a tree and store in the matrix the matching combinations
+            # create a tree of combinations, and store the matching combinations in a set
             recur_elements(money, matrix, [c], coins[i], coins[:])
+    # return the size of the set of matching combinations 
     return len(matrix)
 
 
