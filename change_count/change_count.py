@@ -3,9 +3,7 @@
 def filter_coins(coins, money):
     '''Removes any coin that are either larger than the ``money`` or negative
     values - there should not be a negative value coin'''
-
     valid_coins = []
-
     for c in coins:
         if c < 1:
             continue
@@ -16,14 +14,48 @@ def filter_coins(coins, money):
     return valid_coins
 
 
+def recur_elements(money, matrix, combination, current, next):
+    compared = money - sum(combination)
+    if compared < 0:
+        popped = combination.pop()
+        if len(next) == 0:
+            return
+        if current == popped:
+            current = next.pop()
+        combination.append(current)
+        return recur_elements(money, matrix, combination, current, next)
+    if compared > 0:
+        combination.append(current)
+        return recur_elements(money, matrix, combination, current, next)
+    if compared == 0:
+        # copy the combination into the matrix as a sorted tuple
+        found = combination[:]
+        found.sort()
+        matrix.add(tuple(found))
+        if len(next) == 0:
+            return
+        popped = combination.pop()
+        if current == popped:
+            combination.pop()
+        return recur_elements(money, matrix, combination, next.pop(), next)
+
+
 def change_count(money, coins):
     '''Return the number of possible coin combinations to return the money
     amount of coins.
     The order of coin sequences do not matter i.e. [1,1,2] == [2,1,1] == [1,2,1]
     '''
-    combinations = 0
-    # ...
-    return combinations
+    # filter all invalid coin values
+    coins = filter_coins(coins, money)
+    # keep a set of all possible combinations
+    matrix = set()
+    # for each coin
+    for c in coins:
+        # in each position
+        for i, _ in enumerate(coins):
+            # traverse a tree and store in the matrix the matching combinations
+            recur_elements(money, matrix, [c], coins[i], coins[:])
+    return len(matrix)
 
 
 def main():
