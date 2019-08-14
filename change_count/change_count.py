@@ -1,5 +1,21 @@
 #!/bin/env python
 
+def filter_coins(coins, money):
+    '''Removes any coin that are either larger than the ``money`` or negative
+    values - there should not be a negative value coin'''
+
+    valid_coins = []
+
+    for c in coins:
+        if c < 1:
+            continue
+        if c > money:
+            continue
+        valid_coins.append(c)
+
+    return valid_coins
+
+
 def change_count(money, coins):
     '''Return the number of possible coin combinations to return the money
     amount of coins.
